@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/continenti">
+
+	<Resource auth="Container"
+		driverClassName="com.mysql.jdbc.Driver" name="jdbc/local"
+		username="root" password="root" type="javax.sql.DataSource"
+		url="jdbc:mysql://localhost:3306/"/>
+
+</Context>
