@@ -1,4 +1,4 @@
-package it.objectmethod.continenti.domain;
+package it.objectmethod.continenti.model;
 
 public class Nazione {
 	private String code;

@@ -1,4 +1,4 @@
-package it.objectmethod.continenti.domain;
+package it.objectmethod.continenti.model;
 
 public class Citta {
 	private int id;
@@ -11,7 +11,7 @@ public class Citta {
 	}
 
 	public void setId(int id) {
-		id = id;
+		this.id = id;
 	}
 
 	public String getName() {

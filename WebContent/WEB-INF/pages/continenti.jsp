@@ -12,7 +12,7 @@
 
 		<form action="/ContinentiSpringMVC/nazioni">
 			<input type="submit" value="${cont}" />
-			<input type="text" id="nascondi" name="codiceContinente" value="${cont}" />
+			<input type="text" id="nascondi" name="nomeContinente" value="${cont}" />
 		</form>
 	</c:forEach>
 </body>

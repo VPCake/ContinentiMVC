@@ -3,6 +3,7 @@ package it.objectmethod.continenti.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,40 +14,47 @@ import it.objectmethod.continenti.dao.ICittaDao;
 import it.objectmethod.continenti.dao.INazioneDao;
 import it.objectmethod.continenti.dao.impl.CittaDaoImpl;
 import it.objectmethod.continenti.dao.impl.NazioneDaoImpl;
-import it.objectmethod.continenti.domain.Citta;
-import it.objectmethod.continenti.domain.Nazione;
+import it.objectmethod.continenti.model.Citta;
+import it.objectmethod.continenti.model.Nazione;
 
 @Controller
 public class WorldController {
+
+	@Autowired
+	private INazioneDao nazioneDao;
 
 	@GetMapping("/index")
 	public String index(ModelMap model) {
 
 		List<String> elencoContinenti = new ArrayList<>();
-		INazioneDao continentiDao = new NazioneDaoImpl();
-		elencoContinenti = continentiDao.getContinents();
+		elencoContinenti = nazioneDao.getContinents();
 
 		model.addAttribute("continents", elencoContinenti);
 		return "continenti";
 	}
 
 	@GetMapping("/nazioni")
-	public String elencoNazioni(@RequestParam("codiceContinente") String codice, ModelMap model) {
+	public List<Nazione> printNations(@RequestParam("nomeContinente") String continente, ModelMap model) {
 
-		List<Nazione> elencoNaz = new ArrayList<>();
-		INazioneDao codCont = new NazioneDaoImpl();
-		elencoNaz = codCont.getNationByContinent(codice);
-		model.addAttribute("nazioni", elencoNaz);
-		return "nazioni";
+		List<Nazione> nazioni = new ArrayList<>();
+		nazioni = nazioneDao.getNationByContinent(continente);
+
+		model.addAttribute("nazioni", nazioni);
+		return nazioni;
+
+	}
+	
+	@Autowired
+	private ICittaDao cittaDao;
+
+	@GetMapping("/citta/{codNaz}/show")
+	public List<Citta> printCities(@PathVariable("codNaz") String codice, ModelMap model) {
+
+		List<Citta> citta= new ArrayList<Citta>();
+		citta=cittaDao.getCityByCountryCode(codice);
+		
+		model.addAttribute("citta", citta);
+		return citta;
 	}
 
-	@GetMapping("/citta/{codice}/show")
-	public String elencoCitta(@PathVariable("codice") String codice, ModelMap model) {
-
-		List<Citta> elencoCitta = new ArrayList<>();
-		ICittaDao codCont = new CittaDaoImpl();
-		elencoCitta = codCont.getCityByCountryCode(codice);
-		model.addAttribute("citta", elencoCitta);
-		return "citta";
-	}
 }
