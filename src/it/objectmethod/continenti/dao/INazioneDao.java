@@ -8,7 +8,7 @@ public interface INazioneDao {
 
 	public List<Nazione> getNationByContinent(String continentNation);
 
-	//public List<Nazione> getNations();
+	public List<Nazione> getNations();
 
 	public List<String> getContinents();
 }

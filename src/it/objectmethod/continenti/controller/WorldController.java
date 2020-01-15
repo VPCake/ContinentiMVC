@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.objectmethod.continenti.dao.ICittaDao;
 import it.objectmethod.continenti.dao.INazioneDao;
-import it.objectmethod.continenti.dao.impl.CittaDaoImpl;
-import it.objectmethod.continenti.dao.impl.NazioneDaoImpl;
 import it.objectmethod.continenti.model.Citta;
 import it.objectmethod.continenti.model.Nazione;
 
@@ -22,6 +20,9 @@ public class WorldController {
 
 	@Autowired
 	private INazioneDao nazioneDao;
+
+	@Autowired
+	private ICittaDao cittaDao;
 
 	@GetMapping("/index")
 	public String index(ModelMap model) {
@@ -34,27 +35,25 @@ public class WorldController {
 	}
 
 	@GetMapping("/nazioni")
-	public List<Nazione> printNations(@RequestParam("nomeContinente") String continente, ModelMap model) {
+	public String printNations(@RequestParam("nomeContinente") String continente, ModelMap model) {
 
 		List<Nazione> nazioni = new ArrayList<>();
 		nazioni = nazioneDao.getNationByContinent(continente);
 
 		model.addAttribute("nazioni", nazioni);
-		return nazioni;
+		return "nazioni";
 
 	}
-	
-	@Autowired
-	private ICittaDao cittaDao;
 
 	@GetMapping("/citta/{codNaz}/show")
-	public List<Citta> printCities(@PathVariable("codNaz") String codice, ModelMap model) {
+	public String printCities(@PathVariable("codNaz") String codice, ModelMap model) {
 
-		List<Citta> citta= new ArrayList<Citta>();
-		citta=cittaDao.getCityByCountryCode(codice);
-		
+		List<Citta> citta = new ArrayList<Citta>();
+		citta = cittaDao.getCityByCountryCode(codice);
+
 		model.addAttribute("citta", citta);
-		return citta;
+		return "citta";
 	}
+
 
 }

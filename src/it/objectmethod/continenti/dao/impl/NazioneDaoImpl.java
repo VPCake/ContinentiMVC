@@ -22,25 +22,23 @@ public class NazioneDaoImpl implements INazioneDao {
 	}
 
 	@Override
-	public List<Nazione> getNationByContinent(String continentNation) {
+	public List<Nazione> getNationByContinent(String continent) {
 		List<Nazione> nazioni = new ArrayList<Nazione>();
 		
 		String sql = "SELECT code,name,continent,population FROM world.country WHERE continent = ?";
-		nazioni = this.jdbcTemplateObject.query(sql, new Object[] { continentNation }, new NazioneMapper());
+		nazioni = this.jdbcTemplateObject.query(sql, new Object[] { continent }, new NazioneMapper());
 		return nazioni;
 	}
 
-//	@Override
-//	public List<Nazione> getNations() {
-//
-//		List<Nazione> nazioni = new ArrayList<Nazione>();
-//		Nazione nazione = new Nazione();
-//		String sql = "SELECT country.Code,country.Name,country.Continent, country.Population FROM world.country;";
-//		nazione = this.jdbcTemplateObject.queryForObject(sql, new Object[] {}, new NazioneMapper());
-//		nazioni.add(nazione);
-//		return nazioni;
-//
-//	}
+	@Override
+	public List<Nazione> getNations() {
+
+		List<Nazione> nazioni = new ArrayList<Nazione>();
+		String sql = "SELECT country.Code,country.Name,country.Continent, country.Population FROM world.country;";
+		nazioni = this.jdbcTemplateObject.query(sql, new Object[] {}, new NazioneMapper());
+		return nazioni;
+
+	}
 
 	@Override
 	public List<String> getContinents() {
